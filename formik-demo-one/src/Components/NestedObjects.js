@@ -8,12 +8,17 @@ const initialValues = {
   email: '',
   channel: '',
   comments: '',
-  address: ''
+  address: '',
+  social: {
+    facebook: '',
+    instagram: '',
+    twitter: ''
+  }
 }
 
 const onSubmit = values => {
   console.log('Form data', values)
-  alert(`Name:${values.name}, Email:${values.email}, Channel:${values.channel}`)
+  alert(`Form Submitted SuccessFully`)
 }
 
 // new validation concept using Yup library
@@ -27,7 +32,7 @@ const validationSchema = Yup.object({
   address: Yup.string().required('Address field is necessary to be filled')
 })
 
-function NewYoutubeFormThree () {
+function NestedObjects () {
   return (
     <Formik
       initialValues={initialValues}
@@ -45,7 +50,7 @@ function NewYoutubeFormThree () {
           <label htmlFor='email'> E-mail </label>
           <Field type='email' id='email' name='email' />
           <ErrorMessage name='email'>
-            {
+          {
               (errorMsg) => {
                 return <div className='error'> {errorMsg} </div>
               } 
@@ -73,7 +78,7 @@ function NewYoutubeFormThree () {
         <div className='form-control'>
           <label htmlFor='address'> Address </label>
           <Field type='text' name='address'>
-              {
+          {
                   (props) => {
                       const { field, form, meta } = props
                       console.log(props)
@@ -85,6 +90,22 @@ function NewYoutubeFormThree () {
               }
           </Field>
         </div>
+      
+       <h2 className='heading'>  Newly added nested objects </h2>
+        <div className='form-control'>
+          <label htmlFor='facebook'> FaceBook </label>
+          <Field type='text' id='facebook' name='social.facebook' />
+        </div>
+
+        <div className='form-control'>
+          <label htmlFor='instagram'> Instagram </label>
+          <Field type='text' id='instagram' name='social.instagram' />
+        </div>
+
+        <div className='form-control'>
+          <label htmlFor='twitter'> Twitter </label>
+          <Field type='text' id='twitter' name='social.twitter' />
+        </div>
 
         <button type='submit'> Submit </button>
       </Form>
@@ -92,4 +113,4 @@ function NewYoutubeFormThree () {
   )
 }
 
-export default NewYoutubeFormThree
+export default NestedObjects

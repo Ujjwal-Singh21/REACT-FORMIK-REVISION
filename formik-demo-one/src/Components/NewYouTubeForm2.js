@@ -9,7 +9,7 @@ const initialValues = {
   channel: ''
 }
 
-const onSubmit = values => {
+const onSubmit = (values) => {
   console.log('Form data', values)
   alert(`Name:${values.name}, Email:${values.email}, Channel:${values.channel}`)
 }

@@ -7,11 +7,11 @@ const initialValues = {
   channel: ''
 }
 
-const onSubmit = values => {
+const onSubmit = (values) => {
   console.log('Form data', values)
 }
 
-const validate = values => {
+const validate = (values) => {
   const errors = {}
 
   if (!values.name) {

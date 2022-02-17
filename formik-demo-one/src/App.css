@@ -32,3 +32,15 @@ textarea {
 .error {
   color: rgba(212, 7, 7, 0.767);
 }
+
+.heading {
+  color: orangered
+}
+
+.heading1 {
+  color:  darkblue
+}
+
+.heading2 {
+  color:  dodgerblue
+}
