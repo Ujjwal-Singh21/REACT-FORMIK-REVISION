@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Formik, Form, Field, ErrorMessage, FieldArray, FastField } from 'formik'
 import * as Yup from 'yup'
 import TextError from './TextError'
@@ -18,12 +18,30 @@ const initialValues = {
   phNumbers: ['']
 }
 
-const onSubmit = (values) => {
+const savedValues = {
+    name: 'Ujjwal Singh',
+    email: 'Ujjwal9877@gmail.com',
+    channel: 'Code Evolution',
+    comments: 'This is the best channel',
+    address: 'No 10, Baker Street',
+    social: {
+      facebook: '',
+      instagram: '',
+      twitter: ''
+    },
+    phoneNumbers: ['', ''],
+    phNumbers: ['']
+  }
+
+const onSubmit = (values, onSubmitProps) => {
   console.log('Form data', values)
+  console.log('Submit props', onSubmitProps);
+  onSubmitProps.setSubmitting(false)
+  onSubmitProps.resetForm()
   alert(`Form Submitted SuccessFully`)
 }
 
-// new validation concept using Yup library
+// validation using Yup library
 const validationSchema = Yup.object({
   name: Yup.string().required('Name is Required'),
   email: Yup.string()
@@ -32,7 +50,7 @@ const validationSchema = Yup.object({
   channel: Yup.string().required('Channel name is required')
 })
 
-// Field level Validation for Commnets Field
+// Field level Validation for Comments Field
 const validateComments = (value) => {
   let errors
   if (!value) {
@@ -41,13 +59,16 @@ const validateComments = (value) => {
   return errors
 }
 
-function DisableSubmitForm () {
+function ResetFormData () {
+
+ const [formValues, setFormValues] = useState(null)
+
   return (
     <Formik
-      initialValues={initialValues}
+      initialValues={ formValues || initialValues }
       onSubmit={onSubmit}
       validationSchema={validationSchema}
-    //   validateOnMount
+      enableReinitialize
     >
         {
             (formik) => {
@@ -165,35 +186,15 @@ function DisableSubmitForm () {
                 }
             </FieldArray>
         </div>
-
-        <button type='button'
-         onClick={ () => formik.validateField('comments')}> 
-         Validate Comments 
-         </button>
-
-         <button type='button'
-         onClick={ () => formik.validateForm()}> 
-         Validate All 
-         </button>
-
-         <button type='button'
-         onClick={ () => formik.setFieldTouched('comments')}> 
-        Visit Comments
-         </button>
-
-         <button type='button'
-         onClick={ () => formik.setTouched({
-             name: true,
-             email: true,
-             channel: true,
-             comments: true
-         })}> 
-         Visit Fields 
-         </button>
         
+               <button type='button' onClick={() => setFormValues(savedValues)}>
+                      Load Saved Data
+                </button> 
+
+                <button type='reset'> Reset </button>
+
                 <button type='submit'
-                 disabled={!(formik.isValid)}>
-                 {/* disabled={!(formik.dirty && formik.isValid)}> */}
+                 disabled={!formik.isValid || formik.isSubmitting}>
                       Submit
                 </button>
               </Form>          
@@ -204,5 +205,5 @@ function DisableSubmitForm () {
   )
 }
 
-export default DisableSubmitForm 
+export default ResetFormData 
 

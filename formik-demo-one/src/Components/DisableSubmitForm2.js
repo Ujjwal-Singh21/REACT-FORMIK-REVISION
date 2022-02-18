@@ -18,9 +18,11 @@ const initialValues = {
   phNumbers: ['']
 }
 
-const onSubmit = (values) => {
+const onSubmit = (values, onSubmitProps) => {
   console.log('Form data', values)
-  alert(`Form Submitted SuccessFully`)
+  console.log('submit Props', onSubmitProps);
+  onSubmitProps.setSubmitting(false)
+//   alert(`Form Submitted SuccessFully`)
 }
 
 // new validation concept using Yup library
@@ -41,7 +43,7 @@ const validateComments = (value) => {
   return errors
 }
 
-function DisableSubmitForm () {
+function DisableSubmitFormTwo () {
   return (
     <Formik
       initialValues={initialValues}
@@ -192,8 +194,8 @@ function DisableSubmitForm () {
          </button>
         
                 <button type='submit'
-                 disabled={!(formik.isValid)}>
-                 {/* disabled={!(formik.dirty && formik.isValid)}> */}
+                 disabled={!formik.isValid || formik.isSubmitting}>
+                  {/* disabled={formik.isSubmitting}> */}
                       Submit
                 </button>
               </Form>          
@@ -204,5 +206,5 @@ function DisableSubmitForm () {
   )
 }
 
-export default DisableSubmitForm 
+export default DisableSubmitFormTwo 
 
