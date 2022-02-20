@@ -1,17 +1,13 @@
 import React from 'react'
 import { Field } from 'formik'
-import { Input } from '@chakra-ui/react'
-import {
-  FormControl,
-  FormLabel,
-  FormErrorMessage,
-} from '@chakra-ui/react'
+import { Input, FormControl,FormLabel,FormErrorMessage } from '@chakra-ui/react'
 
 function ChakraInput (props) {
   const { label, name, ...rest } = props
   return (
     <Field name={name}>
-      {props => {
+    {
+      (props) => {
         const { field, form } = props
 
         return (
@@ -21,7 +17,8 @@ function ChakraInput (props) {
             <FormErrorMessage> {form.errors[name]} </FormErrorMessage>
           </FormControl>
         )
-      }}
+      }
+    }
     </Field>
   )
 }
