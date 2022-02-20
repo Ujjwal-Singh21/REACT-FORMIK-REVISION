@@ -1290,11 +1290,196 @@ export default EnrollmentForm
 1) link -> https://chakra-ui.com
 
 2) to install -> npm i @chakra-ui/react @emotion/react@^11 @emotion/styled@^11 framer-motion@^6
+   old version -> npm install @chakra-ui/core @emotion/core @emotion/styled emotion-theming
 
-3) to import in App.js -> import { theme, ThemeProvider } from '@chakra-ui/react'
-    wrap whole <div> tag in App.js with <ThemeProvides> component and provide imported theme to theme={theme} prop.
+3) To import in index.js -> 
+---------------------------------
 
-4) In ChakraInput.js file -> import { Input, FormControl, FormLabel, FormErrorMessage } from '@chakra-ui/core'
+import { ChakraProvider } from '@chakra-ui/react'
+
+ReactDOM.render(
+  <React.StrictMode>
+    <ChakraProvider>
+      <App />
+    </ChakraProvider>
+  </React.StrictMode>,
+  document.getElementById('root')
+)
+
+4) In ChakraInput.js file ->
+----------------------------------
+
+import {
+  FormControl,
+  FormLabel,
+  FormErrorMessage,
+} from '@chakra-ui/react'
+
+ChakraInput.js
+------------------
+
+import React from 'react'
+import { Field } from 'formik'
+import { Input } from '@chakra-ui/react'
+import {
+  FormControl,
+  FormLabel,
+  FormErrorMessage,
+} from '@chakra-ui/react'
+
+function ChakraInput (props) {
+  const { label, name, ...rest } = props
+  return (
+    <Field name={name}>
+      {props => {
+        const { field, form } = props
+
+        return (
+          <FormControl isInvalid={form.errors[name] && form.touched[name]}>
+            <FormLabel htmlFor={name}> {label} </FormLabel>
+            <Input id={name} {...rest} {...field} />
+            <FormErrorMessage> {form.errors[name]} </FormErrorMessage>
+          </FormControl>
+        )
+      }}
+    </Field>
+  )
+}
+
+export default ChakraInput
+
+
+FormikControl.js:- ( add an new case for 'chakrainput' at the last before default case)
+------------------------------------------------------------------------------------------------
+
+import React from 'react'
+import Input from './Input'
+import RadioButtons from './RadioButtons'
+import Select from './Select'
+import TextArea from './TextArea'
+import CheckBoxGroup from './CheckBoxGroup'
+import DatePicker from './DatePicker'
+import ChakraInput from './ChakraInput/ChakraInput'
+
+function FormikControl (props) {
+  const { control, ...rest } = props
+
+  switch (control) {
+    case 'input':
+      return <Input {...rest} />
+    case 'textarea':
+      return <TextArea {...rest} />
+    case 'select':
+      return <Select {...rest} />
+    case 'radio':
+      return <RadioButtons {...rest} />
+    case 'checkbox':
+      return <CheckBoxGroup {...rest} />
+    case 'date':
+      return <DatePicker {...rest} />
+    case 'chakrainput':
+      return <ChakraInput {...rest} />
+    default:
+      return null
+  }
+}
+
+export default FormikControl
+
+LoginForm2.js
+-------------------
+
+We make a copy of LoginForm.js and just do some changes as,
+
+1) control='chakrainput'
+2) import { Button } from '@chakra-ui/react'
+3) Comment out the code for designing of input and label in app.css.
+3) use ChakraUI for button instead of a normal button.
+
+example
+-----------
+
+                    <Button
+                     type='submit'
+                     colorScheme='red'
+                     disabled={!formikProps.isValid}
+                     >
+                     Submit </Button>
+
+final code in LoginForm2.js
+--------------------------------
+
+import React from 'react'
+import { Formik, Form } from 'formik'
+import * as Yup from 'yup'
+import FormikControl from '../FormikControl'
+import { Button } from '@chakra-ui/react'
+
+const initialValues = {
+  email: '',
+  password: ''
+}
+
+const validationSchema = Yup.object({
+  email: Yup.string()
+    .email('Invalid e-mail format')
+    .required('Required'),
+  password: Yup.string().required('Required')
+})
+
+const onSubmit = (values, onSubmitProps) => {
+  console.log('Login Form data', values)
+  alert(` Login Form Submitted successfully`)
+  onSubmitProps.resetForm()
+}
+
+function LoginFormTwo (props) {
+  const { label, name, ...rest } = props
+  return (
+    <Formik
+      initialValues={initialValues}
+      validationSchema={validationSchema}
+      onSubmit={onSubmit}
+    >
+      {
+            (formikProps) => {
+                return <Form>
+
+                    <FormikControl
+                     control='chakrainput'
+                     type='email'
+                     name='email'
+                     label='E-mail'
+                    />
+
+                   <FormikControl
+                     control='chakrainput'
+                     type='password'
+                     name='password'
+                     label='Password'
+                    />   <br />
+
+                    <Button
+                     type='submit'
+                     colorScheme='red'
+                     disabled={!formikProps.isValid}
+                     >
+                     Submit </Button>
+
+                </Form>
+            }
+        }
+    </Formik>
+  )
+}
+
+export default LoginFormTwo
+
+
+
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
 
 
 

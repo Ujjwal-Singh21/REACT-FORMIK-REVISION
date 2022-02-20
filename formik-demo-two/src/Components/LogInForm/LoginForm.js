@@ -29,34 +29,32 @@ function LoginForm (props) {
       validationSchema={validationSchema}
       onSubmit={onSubmit}
     >
-      {
-            (formikProps) => {
-                return <Form>
+     {
+      (formikProps) => {
+        return (
+          <Form>
+            <FormikControl
+              control='input'
+              type='email'
+              name='email'
+              label='E-mail'
+            />
 
-                    <FormikControl
-                    //  control='input'
-                     control='chakrainput'
-                     type='email'
-                     name='email'
-                     label='E-mail'
-                    />
+            <FormikControl
+              control='input'
+              type='password'
+              name='password'
+              label='Password'
+            />
 
-                   <FormikControl
-                   //  control='input'
-                     control='chakrainput'
-                     type='password'
-                     name='password'
-                     label='Password'
-                    />
+            <button type='submit' disabled={!formikProps.isValid}>
+              Submit
+            </button>
 
-                    <button
-                     type='submit'
-                     disabled={!formikProps.isValid}
-                     >
-                     Submit </button>
-                </Form>
-            }
-        }
+          </Form>
+        )
+      }
+    }
     </Formik>
   )
 }
