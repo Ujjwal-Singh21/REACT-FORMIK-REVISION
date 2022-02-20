@@ -4,7 +4,6 @@ import * as Yup from 'yup'
 import FormikControl from './FormikControl'
 
 function FormikContainer () {
-
   const dropDownOptions = [
     { key: 'Select an option', value: '' },
     { key: 'option 1', value: 'option1' },
@@ -29,7 +28,8 @@ function FormikContainer () {
     description: '',
     selectOption: '',
     radioOption: '',
-    checkboxOption: []
+    checkboxOption: [],
+    birthDate: null
   }
 
   const validationSchema = Yup.object({
@@ -37,11 +37,13 @@ function FormikContainer () {
     description: Yup.string().required('Required'),
     selectOption: Yup.string().required('Required'),
     radioOption: Yup.string().required('Required'),
-    checkboxOption: Yup.array().required('Required')
+    checkboxOption: Yup.array().min(1, 'Required'),
+    birthDate: Yup.date().required('Required').nullable()
   })
 
   const onSubmit = (values) => {
     console.log('Form values', values)
+    alert(`Form submitted successFully`)
   }
 
   return (
@@ -50,9 +52,11 @@ function FormikContainer () {
       validationSchema={validationSchema}
       onSubmit={onSubmit}
     >
-      {props => {
+    {
+      (props) => {
         return (
           <Form>
+            
             <FormikControl
               control='input'
               type='email'
@@ -87,10 +91,17 @@ function FormikContainer () {
               options={checkboxOptions}
             />
 
+            <FormikControl
+              control='date'
+              name='birthDate'
+              label='Pick a Date'
+            />
+
             <button type='submit'> Submit </button>
           </Form>
         )
-      }}
+      }
+    }
     </Formik>
   )
 }

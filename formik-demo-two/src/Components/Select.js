@@ -1,14 +1,14 @@
 import React from 'react'
-import { Field, ErrorMessage }  from 'formik'
+import { Field, ErrorMessage } from 'formik'
 import TextError from './TextError'
 
-function Select(props) {
-    const { label, name, options, ...rest} = props
+function Select (props) {
+  const { label, name, options, ...rest } = props
   return (
     <div className='form-control'>
-        <label htmlFor={name}> {label} </label>
-        <Field as='select' id={name} name={name} {...rest}>
-            {
+      <label htmlFor={name}> {label} </label>
+      <Field as='select' id={name} name={name} {...rest}>
+        {
                 options.map((option) => {
                     return(
                         <option key={option.value} value={option.value}>
@@ -17,10 +17,9 @@ function Select(props) {
                     )
                 })
             }
-        </Field>
+      </Field>
 
-        <ErrorMessage name={name} component={TextError}/>
-
+      <ErrorMessage name={name} component={TextError} />
     </div>
   )
 }

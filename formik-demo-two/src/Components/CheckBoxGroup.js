@@ -2,13 +2,13 @@ import React from 'react'
 import { Field, ErrorMessage } from 'formik'
 import TextError from './TextError'
 
-function CheckBoxGroup(props) {
-    const { label, name, options, ...rest} = props
+function CheckBoxGroup (props) {
+  const { label, name, options, ...rest } = props
   return (
     <div className='form-control'>
-        <label> {label} </label>
-        <Field name={name} {...rest}>
-            {
+      <label> {label} </label>
+      <Field name={name} {...rest}>
+        {
                 (props) => {
                     const { field } = props
                     return options.map((option) => {
@@ -30,10 +30,9 @@ function CheckBoxGroup(props) {
                     })
                 }
             }
-        </Field>
+      </Field>
 
-        <ErrorMessage name={name} component={TextError}/>
-
+      <ErrorMessage name={name} component={TextError} />
     </div>
   )
 }

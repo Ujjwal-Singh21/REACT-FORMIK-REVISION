@@ -584,6 +584,726 @@ export default RadioButtons
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------
 
+37) CheckBox Group ( File:- CheckBoxGroup.js)
+==================================
+
+FormikContainer.js
+-----------------------
+
+import React from 'react'
+import { Formik, Form, yupToFormErrors } from 'formik'
+import * as Yup from 'yup'
+import FormikControl from './FormikControl'
+
+function FormikContainer () {
+  const dropDownOptions = [
+    { key: 'Select an option', value: '' },
+    { key: 'option 1', value: 'option1' },
+    { key: 'option 2', value: 'option2' },
+    { key: 'option 3', value: 'option3' }
+  ]
+
+  const radioOptions = [
+    { key: 'Option 1', value: 'rOption1' },
+    { key: 'Option 2', value: 'rOption2' },
+    { key: 'Option 3', value: 'rOption3' }
+  ]
+
+  const checkboxOptions = [
+    { key: 'Option 1', value: 'cOption1' },
+    { key: 'Option 2', value: 'cOption2' },
+    { key: 'Option 3', value: 'cOption3' }
+  ]
+
+  const initialValues = {
+    email: '',
+    description: '',
+    selectOption: '',
+    radioOption: '',
+    checkboxOption: [ ],
+  }
+
+  const validationSchema = Yup.object({
+    email: Yup.string().required('Required'),
+    description: Yup.string().required('Required'),
+    selectOption: Yup.string().required('Required'),
+    radioOption: Yup.string().required('Required'),
+    checkboxOption: Yup.array().min(1, 'Required'),
+  })
+
+  const onSubmit = (values) => {
+    console.log('Form values', values)
+    alert(`Form submitted successFully`)
+  }
+
+  return (
+    <Formik
+      initialValues={initialValues}
+      validationSchema={validationSchema}
+      onSubmit={onSubmit}
+    >
+    {
+      (props) => {
+        return (
+          <Form>
+            <FormikControl
+              control='input'
+              type='email'
+              name='email'
+              label='Email'
+            />
+
+            <FormikControl
+              control='textarea'
+              name='description'
+              label='Description'
+            />
+
+            <FormikControl
+              control='select'
+              name='selectOption'
+              label='Select a Topic'
+              options={dropDownOptions}
+            />
+
+            <FormikControl
+              control='radio'
+              name='radioOption'
+              label='Radio Topic'
+              options={radioOptions}
+            />
+
+            <FormikControl
+              control='checkbox'
+              name='checkboxOption'
+              label='CheckBox Topics'
+              options={checkboxOptions}
+            />
+
+            <button type='submit'> Submit </button>
+          </Form>
+        )
+      }
+    }
+    </Formik>
+  )
+}
+
+export default FormikContainer
+
+FormikControl.js
+-----------------------
+
+import React from 'react'
+import Input from './Input'
+import RadioButtons from './RadioButtons'
+import Select from './Select'
+import TextArea from './TextArea'
+import CheckBoxGroup from './CheckBoxGroup'
+
+function FormikControl (props) {
+  const { control, ...rest } = props
+
+  switch (control) {
+    case 'input':
+      return <Input {...rest} />
+    case 'textarea':
+      return <TextArea {...rest} />
+    case 'select':
+      return <Select {...rest} />
+    case 'radio':
+      return <RadioButtons {...rest} />
+    case 'checkbox':
+      return <CheckBoxGroup {...rest} />
+    case 'date':
+    default:
+      return null
+  }
+}
+
+export default FormikControl
+
+
+CheckBoxGroup.js
+----------------------
+
+import React from 'react'
+import { Field, ErrorMessage } from 'formik'
+import TextError from './TextError'
+
+function CheckBoxGroup (props) {
+  const { label, name, options, ...rest } = props
+  return (
+    <div className='form-control'>
+      <label> {label} </label>
+      <Field name={name} {...rest}>
+        {
+                (props) => {
+                    const { field } = props
+                    return options.map((option) => {
+                        return(
+                            <React.Fragment key={option.key}>
+
+                                <input
+                                type='checkbox'
+                                id={option.value}
+                                {...field}
+                                value={option.value}
+                                checked = {field.value.includes(option.value)}
+                                 />
+
+                                 <label htmlFor={option.value}> {option.key} </label>
+
+                            </React.Fragment>
+                        )
+                    })
+                }
+            }
+      </Field>
+
+      <ErrorMessage name={name} component={TextError} />
+    </div>
+  )
+}
+
+export default CheckBoxGroup
+
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+38) Date Picker ( File:- DatePicker.js)
+===========================
+
+(a) npm install react-datepicker
+
+(b) we import 2 things :-
+    (i) import DatePicker from ' react-datepicker ' 
+        then for CSS we import
+    (ii) import 'react-datepicker/dist/react-datepicker.css'
+
+FormikContainer.js
+-----------------------
+
+import React from 'react'
+import { Formik, Form, yupToFormErrors } from 'formik'
+import * as Yup from 'yup'
+import FormikControl from './FormikControl'
+
+function FormikContainer () {
+  const dropDownOptions = [
+    { key: 'Select an option', value: '' },
+    { key: 'option 1', value: 'option1' },
+    { key: 'option 2', value: 'option2' },
+    { key: 'option 3', value: 'option3' }
+  ]
+
+  const radioOptions = [
+    { key: 'Option 1', value: 'rOption1' },
+    { key: 'Option 2', value: 'rOption2' },
+    { key: 'Option 3', value: 'rOption3' }
+  ]
+
+  const checkboxOptions = [
+    { key: 'Option 1', value: 'cOption1' },
+    { key: 'Option 2', value: 'cOption2' },
+    { key: 'Option 3', value: 'cOption3' }
+  ]
+
+  const initialValues = {
+    email: '',
+    description: '',
+    selectOption: '',
+    radioOption: '',
+    checkboxOption: [],
+    birthDate: null
+  }
+
+  const validationSchema = Yup.object({
+    email: Yup.string().required('Required'),
+    description: Yup.string().required('Required'),
+    selectOption: Yup.string().required('Required'),
+    radioOption: Yup.string().required('Required'),
+    checkboxOption: Yup.array().min(1, 'Required'),
+    birthDate: Yup.date().required('Required').nullable()
+  })
+
+  const onSubmit = (values) => {
+    console.log('Form values', values)
+    alert(`Form submitted successFully`)
+  }
+
+  return (
+    <Formik
+      initialValues={initialValues}
+      validationSchema={validationSchema}
+      onSubmit={onSubmit}
+    >
+    {
+      (props) => {
+        return (
+          <Form>
+            <FormikControl
+              control='input'
+              type='email'
+              name='email'
+              label='Email'
+            />
+
+            <FormikControl
+              control='textarea'
+              name='description'
+              label='Description'
+            />
+
+            <FormikControl
+              control='select'
+              name='selectOption'
+              label='Select a Topic'
+              options={dropDownOptions}
+            />
+
+            <FormikControl
+              control='radio'
+              name='radioOption'
+              label='Radio Topic'
+              options={radioOptions}
+            />
+
+            <FormikControl
+              control='checkbox'
+              name='checkboxOption'
+              label='CheckBox Topics'
+              options={checkboxOptions}
+            />
+
+            <FormikControl
+              control='date'
+              name='birthDate'
+              label='Pick a Date'
+            />
+
+            <button type='submit'> Submit </button>
+          </Form>
+        )
+      }
+    }
+    </Formik>
+  )
+}
+
+export default FormikContainer
+
+FormikControl.js
+--------------------
+
+import React from 'react'
+import Input from './Input'
+import RadioButtons from './RadioButtons'
+import Select from './Select'
+import TextArea from './TextArea'
+import CheckBoxGroup from './CheckBoxGroup'
+import DatePicker from './DatePicker'
+
+function FormikControl (props) {
+  const { control, ...rest } = props
+
+  switch (control) {
+    case 'input':
+      return <Input {...rest} />
+    case 'textarea':
+      return <TextArea {...rest} />
+    case 'select':
+      return <Select {...rest} />
+    case 'radio':
+      return <RadioButtons {...rest} />
+    case 'checkbox':
+      return <CheckBoxGroup {...rest} />
+    case 'date':
+      return <DatePicker {...rest} />
+    default:
+      return null
+  }
+}
+
+export default FormikControl
+
+DatePicker.js
+----------------
+const { field, form } = props
+
+const { value } = field  -> This basically gives the value of the datepicker at any given time.
+
+const { setFieldValue } = form
+
+setFieldValue( ) -> This method we get from form props, it allows us to programatically set a Field's value in the Formik state.
+
+------------------------------------------------------------------------------------------------------------------------------------------------
+
+import React from 'react'
+import DateView from 'react-datepicker'
+import 'react-datepicker/dist/react-datepicker.css'
+import { Field, ErrorMessage } from 'formik'
+import TextError from './TextError'
+
+function DatePicker (props) {
+  const { label, name, ...rest } = props
+  console.log('Cheking props', props);
+  console.log('Checking rest', rest);
+  return (
+    <div className='form-control'>
+      <label htmlFor={name}> {label} </label>
+      <Field name={name}>
+          {
+              (props) => {
+                  console.log(props);
+                  const { field, form } = props
+                  const { value } = field
+                  const { setFieldValue } = form
+                  return <DateView
+                          id={name}
+                          {...field}
+                          {...rest}
+                          selected={value}
+                          onChange={(updatedDate) => setFieldValue(name, updatedDate)} />
+              }
+          }
+      </Field>
+
+      <ErrorMessage name={name} component={TextError}/>
+    </div>
+  )
+}
+
+export default DatePicker
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+39) Login form ( Folder -> LoginForm, file -> LoginForm.js)
+==========================================
+
+We used previously made input.js and FormikControl.js for this LoginForm too. We are able to use them both because they are re-usable
+and the reason for that is they are not simply Hard Coded.
+
+LoginForm.js
+----------------
+
+import React from 'react'
+import { Formik, Form } from 'formik'
+import * as Yup from 'yup'
+import FormikControl from '../FormikControl'
+
+const initialValues = {
+  email: '',
+  password: ''
+}
+
+const validationSchema = Yup.object({
+  email: Yup.string()
+    .email('Invalid e-mail format')
+    .required('Required'),
+  password: Yup.string().required('Required')
+})
+
+const onSubmit = (values, onSubmitProps) => {
+  console.log('Form data', values)
+  alert(`Form Submitted successfully`)
+  onSubmitProps.resetForm()
+}
+
+function LoginForm (props) {
+  const { label, name, ...rest } = props
+  return (
+    <Formik
+      initialValues={initialValues}
+      validationSchema={validationSchema}
+      onSubmit={onSubmit}
+    >
+      {
+            (formikProps) => {
+                return <Form>
+
+                    <FormikControl
+                     control='input'
+                     type='email'
+                     name='email'
+                     label='E-mail'
+                    />
+
+                   <FormikControl
+                     control='input'
+                     type='password'
+                     name='password'
+                     label='Password'
+                    />
+
+                    <button
+                     type='submit'
+                     disabled={!formikProps.isValid}
+                     >
+                     Submit </button>
+                </Form>
+            }
+        }
+    </Formik>
+  )
+}
+
+export default LoginForm
+
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+40) RegistrationForm ( Folder -> RegistrationForm, file -> RegistrationForm.js)
+=========================================================
+
+We used previously made input.js, RadioBuutons.js and FormikControl.js for this LoginForm too. We are able to use them both because 
+they are re-usable and the reason for that is they are not simply Hard Coded.
+
+RegistrationForm.js
+-------------------------
+
+import React from 'react'
+import { Formik, Form } from 'formik'
+import * as Yup from 'yup'
+import FormikControl from '../FormikControl'
+
+const initialValues = {
+  email: '',
+  password: '',
+  confirmPassword: '',
+  modeOfContact: '',
+  phone: ''
+}
+
+const options = [
+  { key: 'Email', value: 'emailModeOfContact' },
+  { key: 'Telephone', value: 'telephoneModeOfContact' }
+]
+
+const validationSchema = Yup.object({
+  email: Yup.string()
+    .email('Invalid email format')
+    .required('Required'),
+
+  password: Yup.string().required('Required'),
+
+  confirmPassword: Yup.string()
+    .oneOf([Yup.ref('password'), ''], 'Passwords must match')
+    .required('Required'),
+
+  modeOfContact: Yup.string().required('Required'),
+
+  phone: Yup.string().when('modeOfContact', {
+    is: 'telephoneModeOfContact',
+    then: Yup.string().required('Required')
+  })
+})
+
+const onSubmit = (values, onSubmitProps) => {
+  console.log('Form data', values)
+  alert(`Form Submitted Successfully`)
+  onSubmitProps.resetForm()
+}
+
+function RegistrationForm () {
+  return (
+    <Formik
+      initialValues={initialValues}
+      validationSchema={validationSchema}
+      onSubmit={onSubmit}
+    >
+    {
+      (formikProps) => {
+        return (
+          <Form>
+
+            <FormikControl
+              control='input'
+              type='email'
+              name='email'
+              label='Email'
+            />
+
+            <FormikControl
+              control='input'
+              type='password'
+              name='password'
+              label='Password'
+            />
+
+            <FormikControl
+              control='input'
+              type='password'
+              name='confirmPassword'
+              label='Confirm Password'
+            />
+
+            <FormikControl
+              control='radio'
+              name='modeOfContact'
+              label='Mode of contact'
+              options={options}
+            />
+
+            <FormikControl
+              control='input'
+              type='text'
+              name='phone'
+              label='Phone Number'
+            />
+
+            <button type='submit' disabled={!formikProps.isValid}>
+              Submit
+            </button>
+            
+          </Form>
+        )
+      }
+    }
+    </Formik>
+  )
+}
+
+export default RegistrationForm
+
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+41) Course Enrollment Form ( Folder ->  CourseEnrollmentForm, file -> CourseEnrollmentForm.js)
+===================================================================
+
+We used previously made input.js, select.js, CheckBoxGroup.js, DatePicker.js and FormikControl.js for this LoginForm too. We are able to 
+use them both because they are re-usable and the reason for that is they are not simply Hard Coded.
+
+EnrollmentForm.js
+----------------------
+
+import React from 'react'
+import { Formik, Form } from 'formik'
+import * as Yup from 'yup'
+import FormikControl from '../FormikControl'
+
+const initialValues = {
+  email: '',
+  bio: '',
+  course: '',
+  skills: [],
+  courseDate: null
+}
+
+const dropDownOptions = [
+  { key: '-- Select a course --', value: '' },
+  { key: 'React', value: 'react' },
+  { key: 'Angular', value: 'angular' },
+  { key: 'Vue', value: 'vue' }
+]
+
+const checkboxOptions = [
+  { key: 'HTML', value: 'html' },
+  { key: 'CSS', value: 'css' },
+  { key: 'JavaScript', value: 'javascript' }
+]
+
+const validationSchema = Yup.object({
+  email: Yup.string()
+    .email('Invalid email format')
+    .required('Required'),
+
+  bio: Yup.string().required('Required'),
+  course: Yup.string().required('Required'),
+  skills: Yup.array().min(1, 'Atleast One skill Required'),
+
+  courseDate: Yup.date()
+    .required('Required')
+    .nullable()
+})
+
+const onSubmit = (values, onSubmitProps) => {
+  console.log('Course Enrollment Form data', values)
+  alert(`Enrollment form submitted successfully`)
+  onSubmitProps.resetForm()
+}
+
+function EnrollmentForm () {
+  return (
+    <Formik
+      initialValues={initialValues}
+      validationSchema={validationSchema}
+      onSubmit={onSubmit}
+    >
+    {
+      (formikProps) => {
+        return (
+          <Form>
+              
+            <FormikControl
+              control='input'
+              type='email'
+              name='email'
+              label='Email'
+            />
+
+            <FormikControl control='textarea' name='bio' label='Bio' />
+
+            <FormikControl
+              control='select'
+              name='course'
+              label='Course'
+              options={dropDownOptions}
+            />
+
+            <FormikControl
+              control='checkbox'
+              name='skills'
+              label='Ypur SkillSet'
+              options={checkboxOptions}
+            />
+
+            <FormikControl
+              control='date'
+              type='email'
+              name='courseDate'
+              label='Course Date'
+            />
+
+            <button type='submit' disabled={!formikProps.isValid}>
+              Submit
+            </button>
+
+          </Form>
+        )
+      }
+    }
+    </Formik>
+  )
+}
+
+export default EnrollmentForm
+
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+42) Wiring up a UI library ( Chakra UI )
+============================
+
+1) link -> https://chakra-ui.com
+
+2) to install -> npm i @chakra-ui/react @emotion/react@^11 @emotion/styled@^11 framer-motion@^6
+
+3) to import in App.js -> import { theme, ThemeProvider } from '@chakra-ui/react'
+    wrap whole <div> tag in App.js with <ThemeProvides> component and provide imported theme to theme={theme} prop.
+
+4) In ChakraInput.js file -> import { Input, FormControl, FormLabel, FormErrorMessage } from '@chakra-ui/core'
+
+
+
+
+
+
+
+
+
 
 
 
