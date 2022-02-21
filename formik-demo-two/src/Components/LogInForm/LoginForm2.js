@@ -18,7 +18,7 @@ const validationSchema = Yup.object({
 
 const onSubmit = (values, onSubmitProps) => {
   console.log('Login Form data', values)
-  alert(` Login Form Submitted successfully`)
+  alert(` Login Form using Chakra UI Submitted successfully`)
   onSubmitProps.resetForm()
 }
 
