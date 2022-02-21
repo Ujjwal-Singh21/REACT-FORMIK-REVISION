@@ -4,6 +4,7 @@ import TextError from './TextError'
 
 function RadioButtons (props) {
   const { label, name, options, ...rest } = props
+
   return (
     <div className='form-control'>
       <label> {label} </label>
@@ -15,6 +16,7 @@ function RadioButtons (props) {
                     return options.map((option) => {
                         return(
                             <React.Fragment key={option.key}>
+                              
                                 <input
                                  type='radio'
                                  id={option.value}

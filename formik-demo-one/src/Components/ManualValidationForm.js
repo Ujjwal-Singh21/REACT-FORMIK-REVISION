@@ -23,7 +23,6 @@ const onSubmit = (values) => {
   alert(`Form Submitted SuccessFully`)
 }
 
-// new validation concept using Yup library
 const validationSchema = Yup.object({
   name: Yup.string().required('Name is Required'),
   email: Yup.string()
@@ -32,7 +31,7 @@ const validationSchema = Yup.object({
   channel: Yup.string().required('Channel name is required')
 })
 
-// Field level Validation for Commnets Field
+// Field level Validation for Comments Field
 const validateComments = (value) => {
   let errors
   if (!value) {
@@ -177,7 +176,7 @@ function ManualValidationForm () {
 
          <button type='button'
          onClick={ () => formik.setFieldTouched('comments')}> 
-        Visit Comments
+         Visit Comments
          </button>
 
          <button type='button'

@@ -22,7 +22,6 @@ const onSubmit = values => {
   alert(`Form Submitted SuccessFully`)
 }
 
-// new validation concept using Yup library
 const validationSchema = Yup.object({
   name: Yup.string().required('Name is Required'),
   email: Yup.string()
@@ -41,6 +40,7 @@ function ArrayForm () {
       validationSchema={validationSchema}
     >
       <Form>
+
         <div className='form-control'>
           <label htmlFor='name'> Name </label>
           <Field type='text' id='name' name='name' />
@@ -93,6 +93,7 @@ function ArrayForm () {
         </div>
       
        <h2 className='heading'>  Newly added nested objects </h2>
+
         <div className='form-control'>
           <label htmlFor='facebook'> FaceBook </label>
           <Field type='text' id='facebook' name='social.facebook' />
@@ -109,17 +110,19 @@ function ArrayForm () {
         </div>
 
         <h2 className='heading1'>  Newly added Array Fields</h2>
+
         <div className='form-control'>
-          <label htmlFor='primaryph'> Primary PhoneNumber </label>
+          <label htmlFor='primaryph'> Primary Phone number </label>
           <Field type='text' id='primaryph' name='phoneNumbers[0]' />
         </div>
 
         <div className='form-control'>
-          <label htmlFor='secondaryph'> Secondary PhoneNumber </label>
+          <label htmlFor='secondaryph'> Secondary Phone number </label>
           <Field type='text' id='secondaryph' name='phoneNumbers[1]' />
         </div>
 
         <button type='submit'> Submit </button>
+
       </Form>
     </Formik>
   )

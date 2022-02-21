@@ -2,6 +2,7 @@ import React from 'react'
 import { Formik, Form } from 'formik'
 import * as Yup from 'yup'
 import FormikControl from '../FormikControl'
+import { Button } from '@chakra-ui/react'
 
 const initialValues = {
   email: '',
@@ -21,8 +22,8 @@ const onSubmit = (values, onSubmitProps) => {
   onSubmitProps.resetForm()
 }
 
-function LoginForm (props) {
-  const { label, name, ...rest } = props
+function LoginForm () {
+  
   return (
     <Formik
       initialValues={initialValues}
@@ -47,9 +48,13 @@ function LoginForm (props) {
               label='Password'
             />
 
-            <button type='submit' disabled={!formikProps.isValid}>
+            <Button
+             type='submit'
+             disabled={!formikProps.isValid}
+             colorScheme='blue'
+            >
               Submit
-            </button>
+            </Button>
 
           </Form>
         )

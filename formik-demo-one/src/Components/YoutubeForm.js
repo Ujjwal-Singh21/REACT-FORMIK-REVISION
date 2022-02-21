@@ -32,19 +32,21 @@ const validate = (values) => {
 }
 
 function YoutubeForm () {
+
   const formik = useFormik({
     initialValues: initialValues,
     onSubmit: onSubmit,
     validate: validate
   })
 
-  //   console.log('Formik Values', formik.values);
-  //   console.log('Formik errors', formik.errors)
-  //   console.log('Visited Fields', formik.touched)
+    console.log('Formik Values', formik.values)
+    console.log('Formik errors', formik.errors)
+    console.log('Visited Fields', formik.touched)
 
   return (
     <div>
       <form onSubmit={formik.handleSubmit}>
+        
         <div className='form-control'>
           <label htmlFor='name'> Name </label>
           <input

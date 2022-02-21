@@ -23,7 +23,6 @@ const onSubmit = (values) => {
   alert(`Form Submitted SuccessFully`)
 }
 
-// new validation concept using Yup library
 const validationSchema = Yup.object({
   name: Yup.string().required('Name is Required'),
   email: Yup.string()
@@ -32,7 +31,7 @@ const validationSchema = Yup.object({
   channel: Yup.string().required('Channel name is required')
 })
 
-// Field level Validation for Commnets Field
+// Field level Validation for Comments Field
 const validateComments = (value) => {
   let errors
   if (!value) {
@@ -61,11 +60,11 @@ function FastFieldDemo () {
           <label htmlFor='email'> E-mail </label>
           <Field type='email' id='email' name='email' />
           <ErrorMessage name='email'>
-            {
+          {
             (errorMsg) => {
               return <div className='error'> {errorMsg} </div>
             }
-            }
+          }
           </ErrorMessage>
         </div>
 
@@ -95,7 +94,7 @@ function FastFieldDemo () {
         <div className='form-control'>
           <label htmlFor='address'> Address </label>
           <FastField type='text' name='address'>
-            {
+          {
             (props) => {
               console.log('Render Props')
               const { field, form, meta } = props
@@ -108,7 +107,7 @@ function FastFieldDemo () {
                 </div>
               )
             }
-            }
+          }
           </FastField>
         </div>
 

@@ -2,6 +2,7 @@ import React from 'react'
 import { Formik, Form } from 'formik'
 import * as Yup from 'yup'
 import FormikControl from '../FormikControl'
+import { Button } from '@chakra-ui/react'
 
 const initialValues = {
   email: '',
@@ -88,9 +89,13 @@ function RegistrationForm () {
               label='Phone Number'
             />
 
-            <button type='submit' disabled={!formikProps.isValid}>
+            <Button
+             type='submit'
+             disabled={!formikProps.isValid}
+             colorScheme='pink'
+             >
               Submit
-            </button>
+            </Button>
 
           </Form>
         )

@@ -4,6 +4,7 @@ import TextError from './TextError'
 
 function Select (props) {
   const { label, name, options, ...rest } = props
+  
   return (
     <div className='form-control'>
       <label htmlFor={name}> {label} </label>

@@ -2,13 +2,15 @@ import React from 'react'
 import { Formik, Form, yupToFormErrors } from 'formik'
 import * as Yup from 'yup'
 import FormikControl from './FormikControl'
+import { Button } from '@chakra-ui/react'
 
 function FormikContainer () {
+
   const dropDownOptions = [
     { key: 'Select an option', value: '' },
-    { key: 'option 1', value: 'option1' },
-    { key: 'option 2', value: 'option2' },
-    { key: 'option 3', value: 'option3' }
+    { key: 'Option 1', value: 'sOption1' },
+    { key: 'Option 2', value: 'sOption2' },
+    { key: 'Option 3', value: 'sOption3' }
   ]
 
   const radioOptions = [
@@ -41,9 +43,10 @@ function FormikContainer () {
     birthDate: Yup.date().required('Required').nullable()
   })
 
-  const onSubmit = (values) => {
+  const onSubmit = (values, onSubmitProps) => {
     console.log('Form values', values)
     alert(`Form submitted successFully`)
+    onSubmitProps.resetForm()
   }
 
   return (
@@ -97,7 +100,8 @@ function FormikContainer () {
               label='Pick a Date'
             />
 
-            <button type='submit'> Submit </button>
+            <Button type='submit' colorScheme='green'> Submit </Button>
+            
           </Form>
         )
       }

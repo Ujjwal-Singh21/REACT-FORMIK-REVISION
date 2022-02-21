@@ -2,6 +2,7 @@ import React from 'react'
 import { Formik, Form } from 'formik'
 import * as Yup from 'yup'
 import FormikControl from '../FormikControl'
+import { Button } from '@chakra-ui/react'
 
 const initialValues = {
   email: '',
@@ -75,7 +76,7 @@ function EnrollmentForm () {
             <FormikControl
               control='checkbox'
               name='skills'
-              label='Ypur SkillSet'
+              label='Your SkillSet'
               options={checkboxOptions}
             />
 
@@ -86,9 +87,13 @@ function EnrollmentForm () {
               label='Course Date'
             />
 
-            <button type='submit' disabled={!formikProps.isValid}>
-              Submit
-            </button>
+            <Button
+             type='submit'
+             disabled={!formikProps.isValid}
+             colorScheme='yellow'
+             >        
+             Submit
+            </Button>
 
           </Form>
         )

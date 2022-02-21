@@ -9,11 +9,11 @@ import RegistrationForm from './Components/RegistrationForm.js/RegistrationForm'
 function App () {
   return (
       <div className='App'>
-        <LoginFormTwo />
+        {/* <LoginFormTwo /> */}
         {/* <EnrollmentForm /> */}
         {/* <RegistrationForm /> */}
         {/* <LoginForm /> */}
-        {/* <FormikContainer /> */}
+        <FormikContainer />
       </div>
   )
 }

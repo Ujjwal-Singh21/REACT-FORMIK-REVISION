@@ -14,16 +14,15 @@ const initialValues = {
     instagram: '',
     twitter: ''
   },
-  phoneNumbers: ['',''],
+  phoneNumbers: ['', ''],
   phNumbers: ['']
 }
 
-const onSubmit = values => {
+const onSubmit = (values) => {
   console.log('Form data', values)
-  alert(`Form Submitted SuccessFully`)
+  alert(`FieldArray Form Submitted SuccessFully`)
 }
 
-// new validation concept using Yup library
 const validationSchema = Yup.object({
   name: Yup.string().required('Name is Required'),
   email: Yup.string()
@@ -42,6 +41,7 @@ function FieldArrayDemo () {
       validationSchema={validationSchema}
     >
       <Form>
+
         <div className='form-control'>
           <label htmlFor='name'> Name </label>
           <Field type='text' id='name' name='name' />
@@ -53,10 +53,10 @@ function FieldArrayDemo () {
           <Field type='email' id='email' name='email' />
           <ErrorMessage name='email'>
           {
-              (errorMsg) => {
-                return <div className='error'> {errorMsg} </div>
-              } 
+            (errorMsg) => {
+              return <div className='error'> {errorMsg} </div>
             }
+          }
           </ErrorMessage>
         </div>
 
@@ -81,19 +81,23 @@ function FieldArrayDemo () {
           <label htmlFor='address'> Address </label>
           <Field type='text' name='address'>
           {
-                  (props) => {
-                      const { field, form, meta } = props
-                      console.log(props)
-                      return <div>
-                          <input type='text' id='address' {...field} />
-                          { meta.touched && meta.error ? <div> {meta.error} </div> : null}
-                      </div>
-                  } 
-              }
+            (props) => {
+              const { field, form, meta } = props
+              console.log(props)
+              return (
+                <div>
+                  <input type='text' id='address' {...field} />
+                  {meta.touched && meta.error ? (
+                    <div> {meta.error} </div>
+                  ) : null}
+                </div>
+              )
+            }
+          }
           </Field>
         </div>
-      
-       <h2 className='heading'>  Newly added nested objects </h2>
+
+        <h2 className='heading'> Newly added nested objects </h2>
         <div className='form-control'>
           <label htmlFor='facebook'> FaceBook </label>
           <Field type='text' id='facebook' name='social.facebook' />
@@ -109,7 +113,7 @@ function FieldArrayDemo () {
           <Field type='text' id='twitter' name='social.twitter' />
         </div>
 
-        <h2 className='heading1'>  Newly added Array Fields</h2>
+        <h2 className='heading1'> Newly added Array Fields</h2>
         <div className='form-control'>
           <label htmlFor='primaryph'> Primary PhoneNumber </label>
           <Field type='text' id='primaryph' name='phoneNumbers[0]' />
@@ -121,10 +125,11 @@ function FieldArrayDemo () {
         </div>
 
         <h2 className='heading2'> FieldArray </h2>
+
         <div className='form-control'>
-            <label> List Of Phone Numbers </label>
-            <FieldArray name='phNumbers'>
-                {
+          <label> List Of Phone Numbers </label>
+          <FieldArray name='phNumbers'>
+            {
                     (fieldArrayProps) => {
                         console.log(fieldArrayProps)
                         const { push, remove, form } = fieldArrayProps
@@ -147,8 +152,7 @@ function FieldArrayDemo () {
                             </div>
                     }
                 }
-            </FieldArray>
-
+          </FieldArray>
         </div>
 
         <button type='submit'> Submit </button>

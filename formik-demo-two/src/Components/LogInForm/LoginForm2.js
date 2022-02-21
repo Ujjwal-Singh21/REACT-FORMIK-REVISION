@@ -22,8 +22,8 @@ const onSubmit = (values, onSubmitProps) => {
   onSubmitProps.resetForm()
 }
 
-function LoginFormTwo (props) {
-  const { label, name, ...rest } = props
+function LoginFormTwo () {
+ 
   return (
     <Formik
       initialValues={initialValues}

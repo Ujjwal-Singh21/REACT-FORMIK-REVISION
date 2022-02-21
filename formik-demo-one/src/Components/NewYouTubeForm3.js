@@ -35,9 +35,11 @@ function NewYoutubeFormThree () {
       validationSchema={validationSchema}
     >
       <Form>
+
         <div className='form-control'>
           <label htmlFor='name'> Name </label>
           <Field type='text' id='name' name='name' />
+          {/* <ErrorMessage name='name' component='div' /> */}
           <ErrorMessage name='name' component={TextError} />
         </div>
 
@@ -87,6 +89,7 @@ function NewYoutubeFormThree () {
         </div>
 
         <button type='submit'> Submit </button>
+
       </Form>
     </Formik>
   )
