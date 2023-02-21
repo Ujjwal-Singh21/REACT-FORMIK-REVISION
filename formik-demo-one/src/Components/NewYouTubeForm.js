@@ -16,9 +16,7 @@ const onSubmit = values => {
 // new validation concept using Yup library
 const validationSchema = Yup.object({
   name: Yup.string().required('Name is Required'),
-  email: Yup.string()
-    .email('Invalid email format')
-    .required('Email is required'),
+  email: Yup.string().email('Invalid email format').required('Email is required'),
   channel: Yup.string().required('Channel name is required')
 })
 
